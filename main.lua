@@ -1,12 +1,29 @@
 Object = require 'libraries/classic/classic'
+Input = require 'libraries/input/input'
+Timer = require 'libraries/hump/timer'
 
 function love.load()
-  local object_files = {}
-  RecursiveEnumerate('objects', object_files)
-  RequireFiles(object_files)
+  RequireAllObjects()
+  input = Input()
+  input:bind('k', 'test')
+
+  timer = Timer()
 
   circle = Circle(400, 300, 50)
   hyperCircle = HyperCircle(200, 150, 50, 120, 10)
+  timer:every(1, function()
+    timer:tween(0.5, hyperCircle, { radius = 100, outer_radius = 240 }, 'in-out-cubic')
+    timer:after(0.5, function()
+      timer:tween(0.5, hyperCircle, { radius = 50, outer_radius = 40 }, 'in-out-cubic')
+    end)
+  end)
+end
+
+function RequireAllObjects()
+  local object_files = {}
+  RecursiveEnumerate('objects', object_files)
+  RequireFiles(object_files)
+  return object_files
 end
 
 function RequireFiles(files)
@@ -29,6 +46,10 @@ function RecursiveEnumerate(folder, file_list)
 end
 
 function love.update(dt)
+  timer:update(dt)
+  if input:pressed('test') then print('pressed') end
+  if input:released('test') then print('released') end
+  if input:down('test') then print('down') end
 end
 
 function love.draw()
