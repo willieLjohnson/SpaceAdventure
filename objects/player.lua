@@ -23,6 +23,8 @@ function Player:shoot()
   local diameter = self.width * 1.2
   self.area:addGameObject("ShootEffect", self.x + diameter * math.cos(self.rotation),
     self.y + diameter * math.sin(self.rotation), { player = self, diameter = diameter })
+  self.area:addGameObject("Projectile", self.x + 1.5 * diameter * math.cos(self.rotation),
+    self.y + 1.5 * diameter * math.sin(self.rotation), { rotation = self.rotation })
 end
 
 function Player:update(dt)
