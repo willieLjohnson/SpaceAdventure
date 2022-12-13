@@ -7,6 +7,7 @@ Physics = require 'libraries/windfield'
 
 require 'GameObject'
 require 'utils'
+require 'globals'
 
 function love.load()
   time = 0
