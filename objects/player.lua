@@ -54,4 +54,5 @@ function Player:die()
     self.area:addGameObject("ExplodeParticle", self.x, self.y)
   end
   Slow(0.15, 1)
+  camera:shake(6, 60, 0.4)
 end
