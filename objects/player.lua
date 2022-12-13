@@ -25,7 +25,8 @@ function Player:shoot()
   self.area:addGameObject("ShootEffect", self.x + diameter * math.cos(self.rotation),
     self.y + diameter * math.sin(self.rotation), { player = self, diameter = diameter })
   self.area:addGameObject("Projectile", self.x + 1.5 * diameter * math.cos(self.rotation),
-    self.y + 1.5 * diameter * math.sin(self.rotation), { rotation = self.rotation })
+    self.y + 1.5 * diameter * math.sin(self.rotation),
+    { rotation = self.rotation })
 end
 
 function Player:update(dt)
@@ -51,7 +52,8 @@ end
 function Player:die()
   self.dead = true
   for i = 1, love.math.random(8, 12) do
-    self.area:addGameObject("ExplodeParticle", self.x, self.y)
+    self.area:addGameObject("ExplodeParticle", self.x, self.y,
+      { color = RedColor })
   end
   Slow(0.15, 1)
   camera:shake(6, 60, 0.4)

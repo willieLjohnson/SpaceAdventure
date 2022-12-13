@@ -2,12 +2,13 @@ ExplodeParticle = GameObject:extend()
 
 function ExplodeParticle:new(area, x, y, opts)
   ExplodeParticle.super.new(self, area, x, y, opts)
-  self.color = opts.color or DefaultColor
+  self.color = opts.color or RedColor
   self.rotation = random(0, 2 * math.pi)
-  self.radius = opts.radius or random(2, 3)
-  self.velocity = opts.velocity or random(75, 150)
-  self.line_width = 2
-  self.timer:tween(opts.diameter or random(0.3, 0.5), self, { radius = 0, velocity = 0, line_width = 0 },
+  self.radius = opts.radius or random(8, 12)
+  self.velocity = opts.velocity or random(150, 300)
+  self.line_width = 8
+  self.timer:tween(opts.duration or random(0.3, 0.5), self,
+    { radius = 0, velocity = 0, line_width = 0 },
     "linear", function() self.dead = true end)
 end
 
@@ -22,7 +23,7 @@ function ExplodeParticle:draw()
   love.graphics.setLineWidth(self.line_width)
   love.graphics.setColor(self.color)
   love.graphics.line(self.x - self.radius, self.y, self.x + self.radius, self.y)
-  love.graphics.setColor(DefaultColor)
+  love.graphics.setColor(255, 255, 255, 255)
   love.graphics.setLineWidth(1)
   love.graphics.pop()
 end

@@ -4,6 +4,7 @@ Input = require 'libraries/boipushy/Input'
 fn = require 'libraries/moses/moses'
 Camera = require 'libraries/hump/camera'
 Physics = require 'libraries/windfield'
+Tween = require 'libraries/tween/tween'
 
 require 'GameObject'
 require 'utils'
