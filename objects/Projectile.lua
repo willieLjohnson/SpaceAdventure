@@ -28,6 +28,10 @@ function Projectile:draw()
   love.graphics.circle('line', self.x, self.y, self.radius)
 end
 
+function Projectile:destroy()
+  Projectile.super.destroy(self)
+end
+
 function Projectile:die()
   self.dead = true
   self.area:addGameObject("ProjectileDeathEffect", self.x, self.y, { color = HPColor, width = 3 * self.radius })

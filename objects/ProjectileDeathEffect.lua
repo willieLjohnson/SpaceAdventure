@@ -13,8 +13,16 @@ function ProjectileDeathEffect:new(area, x, y, opts)
   end)
 end
 
+function ProjectileDeathEffect:update(dt)
+  ProjectileDeathEffect.super.update(self, dt)
+end
+
 function ProjectileDeathEffect:draw()
   if self.first then love.graphics.setColor(DefaultColor)
   elseif self.second then love.graphics.setColor(self.color) end
   love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.width / 2, self.width, self.width)
+end
+
+function ProjectileDeathEffect:destroy()
+  ProjectileDeathEffect.super.destroy(self)
 end

@@ -17,6 +17,7 @@ function Player:new(area, x, y, opts)
   self.timer:every(0.24, function()
     self:shoot()
   end)
+  input:bind('f4', function() self:die() end)
 end
 
 function Player:shoot()
@@ -45,4 +46,12 @@ end
 
 function Player:destroy()
   Player.super.destroy(self)
+end
+
+function Player:die()
+  self.dead = true
+  for i = 1, love.math.random(8, 12) do
+    self.area:addGameObject("ExplodeParticle", self.x, self.y)
+  end
+  Slow(0.15, 1)
 end

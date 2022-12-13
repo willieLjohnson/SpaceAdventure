@@ -47,9 +47,14 @@ function love.load()
 end
 
 function love.update(dt)
-  timer:update(dt)
-  camera:update(dt)
-  if current_room then current_room:update(dt) end
+  timer:update(dt * SlowAmount)
+  camera:update(dt * SlowAmount)
+  if current_room then current_room:update(dt * SlowAmount) end
+end
+
+function Slow(amount, duration)
+  SlowAmount = amount
+  timer:tween("slow", duration, _G, { SlowAmount = 1 }, "in-out-cubic")
 end
 
 function love.draw()
