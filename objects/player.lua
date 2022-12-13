@@ -20,8 +20,9 @@ function Player:new(area, x, y, opts)
 end
 
 function Player:shoot()
-  self.area:addGameObject("ShootEffect", self.x + 1.2 * self.width * math.cos(self.rotation),
-    self.y + 1.2 * self.width * math.sin(self.rotation))
+  local diameter = self.width * 1.2
+  self.area:addGameObject("ShootEffect", self.x + diameter * math.cos(self.rotation),
+    self.y + diameter * math.sin(self.rotation), { player = self, diameter = diameter })
 end
 
 function Player:update(dt)
