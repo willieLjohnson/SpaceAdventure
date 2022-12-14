@@ -18,6 +18,7 @@ function Player:new(area, x, y, opts)
     self:shoot()
   end)
   input:bind('f4', function() self:die() end)
+  self.timer:every(5, function() self:tick() end)
 end
 
 function Player:shoot()
@@ -27,6 +28,10 @@ function Player:shoot()
   self.area:addGameObject("Projectile", self.x + 1.5 * diameter * math.cos(self.rotation),
     self.y + 1.5 * diameter * math.sin(self.rotation),
     { rotation = self.rotation })
+end
+
+function Player:tick()
+  self.area:addGameObject("TickEffect", self.x, self.y, { parent = self })
 end
 
 function Player:update(dt)
