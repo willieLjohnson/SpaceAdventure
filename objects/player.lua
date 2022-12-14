@@ -11,7 +11,8 @@ function Player:new(area, x, y, opts)
   self.rotation = -math.pi / 2
   self.rotationv = 1.66 * math.pi
   self.velocity = 0
-  self.max_velocity = 100
+  self.base_max_velocity = 100
+  self.max_velocity = self.base_max_velocity
   self.acceleration = 100
 
   self.timer:every(0.24, function()
@@ -37,11 +38,25 @@ end
 function Player:update(dt)
   Player.super.update(self, dt)
 
-  if input:down('left') then self.rotation = self.rotation - self.rotationv * dt end
-  if input:down('right') then self.rotation = self.rotation + self.rotationv * dt end
+  local dir = self:getInputDir()
+  if dir.left then self.rotation = self.rotation - self.rotationv * dt end
+  if dir.right then self.rotation = self.rotation + self.rotationv * dt end
+
+  self.max_velocity = self.base_max_velocity
+  if dir.up then self.max_velocity = 1.5 * self.base_max_velocity end
+  if dir.down then self.max_velocity = 1.5 * self.base_max_velocity end
 
   self.velocity = math.min(self.velocity + self.acceleration * dt, self.max_velocity)
   self.collider:setLinearVelocity(self.velocity * math.cos(self.rotation), self.velocity * math.sin(self.rotation))
+end
+
+function Player:getInputDir()
+  return {
+    up = input:down("up"),
+    down = input:down("down"),
+    left = input:down("left"),
+    right = input:down("right"),
+  }
 end
 
 function Player:draw()
